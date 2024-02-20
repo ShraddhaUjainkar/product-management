@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 
 
 const AddProducts = (products, setProducts) => {
+    const [title, setTitle] = useState('');
     const [imageArray, setImageArray] = useState([]);
     const [price, setPrice] = useState('');
     const [discount, setDiscount] = useState('');
@@ -11,10 +12,12 @@ const AddProducts = (products, setProducts) => {
     const [stock, setStock] = useState('');
     const [brand, setBrand] = useState('');
     const [category, setCategory] = useState('');
+    const [description, setDescription] = useState('');
+    const [thumbnail, setThumbnail] = useState('');
   
     const handleImageArrayChange = (e) => {
       const files = e.target.files;
-      setImageArray(files);
+      setImageArray(Array.from(files));
     };
   
     const handleSubmit = (e) => {
@@ -27,29 +30,111 @@ const AddProducts = (products, setProducts) => {
             showConfirmButton: true
         });
     }
+    try {
+        const response =  axios.post('https://dummyjson.com/products/add', {
+            title: title,
+            description: description,
+            price: price,
+            discountPercentage: discount,
+            rating: rating,
+            stock: stock,
+            brand: brand,
+            category: category,
+            thumbnail:thumbnail,
+            images: Array.from(imageArray).map(image => image.name) 
+        });
+        console.log(response.data);
+        Swal.fire({
+                icon: 'success',
+                title: 'Added!',
+                text: `${brand}'s data has been Added.`,
+                showConfirmButton: false,
+                timer: 1500
+            });
+      } catch (error) {
+        console.error(error);
+      }
+    
+    // fetch('https://dummyjson.com/products/add', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json'
+    //     },
+    //     // body: JSON.stringify({
+           
+    //     // })
+        
+    // })
+    // .then(res => res.json())
+    // .then(data => {
+    //     //setProducts([...products, data]);
+    //     const newProduct = { 
+    //         title: title,
+    //         description: description,
+    //         price: price,
+    //         discountPercentage: discount,
+    //         rating: rating,
+    //         stock: stock,
+    //         brand: brand,
+    //         category: category,
+    //         thumbnail:thumbnail,
+    //         images: Array.from(imageArray).map(image => image.name) 
+    //      };
+    //      console.log(newProduct)
+    //     Swal.fire({
+    //         icon: 'success',
+    //         title: 'Added!',
+    //         text: `${brand}'s data has been Added.`,
+    //         showConfirmButton: false,
+    //         timer: 1500
+    //     });
+    // })
+    // .catch(error => {
+    //     console.error('Error:', error);
+    //     Swal.fire({
+    //         icon: 'error',
+    //         title: 'Oops...',
+    //         text: 'Something went wrong!',
+    //         showConfirmButton: true
+    //     });
+    // });
+    
     };
-    const id = products.length + 1;
-    const newProduct = {
-        imageArray,
-        discount,
-        rating,
-        stock,
-        brand,
-        category
-    }
-
-    Swal.fire({
-        icon: 'success',
-        title: 'Added!',
-        text: `${brand}'s data has been Added.`,
-        showConfirmButton: false,
-        timer: 1500
-    });
+   
   
     return (
     <div className='add-product'>
         <div><h2>Add Product</h2></div>
         <form onSubmit={handleSubmit}>
+            <div>
+            <label htmlFor="title">Product Title </label>
+            <input
+                id="title"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
+            </div>
+            <div>
+                <label htmlFor="description">Description</label>
+                <textarea
+                    width="300px"
+                    id="description"
+                    type="text"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+            </div>
+            <div>
+                <label htmlFor="thumbnail">Thumbnail</label>
+                <input
+                    id="thumbnail"
+                    type="file"
+                    value={thumbnail}
+                    onChange={(e)=> setThumbnail(e.target.value)}
+                />
+            </div>
             <div>
             <label htmlFor="imageArray">Product Images </label>
             <input
