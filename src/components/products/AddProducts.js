@@ -30,8 +30,22 @@ const AddProducts = (products, setProducts) => {
             showConfirmButton: true
         });
     }
-    try {
-        const response =  axios.post('https://dummyjson.com/products/add', {
+   
+    fetch('https://dummyjson.com/products/add', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        // body: JSON.stringify({
+           
+        // })
+        
+    })
+    .then(res => res.json())
+    .then(data => {
+        //setProducts([...products, data]);
+        const newProduct = { 
             title: title,
             description: description,
             price: price,
@@ -42,63 +56,25 @@ const AddProducts = (products, setProducts) => {
             category: category,
             thumbnail:thumbnail,
             images: Array.from(imageArray).map(image => image.name) 
-        });
-        console.log(response.data);
+         };
+         console.log(newProduct)
         Swal.fire({
-                icon: 'success',
-                title: 'Added!',
-                text: `${brand}'s data has been Added.`,
-                showConfirmButton: false,
-                timer: 1500
-            });
-      } catch (error) {
-        console.error(error);
-      }
-    
-    // fetch('https://dummyjson.com/products/add', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json'
-    //     },
-    //     // body: JSON.stringify({
-           
-    //     // })
-        
-    // })
-    // .then(res => res.json())
-    // .then(data => {
-    //     //setProducts([...products, data]);
-    //     const newProduct = { 
-    //         title: title,
-    //         description: description,
-    //         price: price,
-    //         discountPercentage: discount,
-    //         rating: rating,
-    //         stock: stock,
-    //         brand: brand,
-    //         category: category,
-    //         thumbnail:thumbnail,
-    //         images: Array.from(imageArray).map(image => image.name) 
-    //      };
-    //      console.log(newProduct)
-    //     Swal.fire({
-    //         icon: 'success',
-    //         title: 'Added!',
-    //         text: `${brand}'s data has been Added.`,
-    //         showConfirmButton: false,
-    //         timer: 1500
-    //     });
-    // })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    //     Swal.fire({
-    //         icon: 'error',
-    //         title: 'Oops...',
-    //         text: 'Something went wrong!',
-    //         showConfirmButton: true
-    //     });
-    // });
+            icon: 'success',
+            title: 'Added!',
+            text: `${title}'s data has been Added.`,
+            showConfirmButton: false,
+            timer: 1500
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            showConfirmButton: true
+        });
+    });
     
     };
    
