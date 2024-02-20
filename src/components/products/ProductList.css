@@ -1,0 +1,79 @@
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px;
+}
+
+.card {
+border: 1px solid #ccc;
+border-radius: 5px;
+padding: 20px;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+transition: 0.3s;
+}
+
+.card:hover {
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+ 
+
+
+.card img {
+max-width: 100%;
+
+}
+
+.card-body {
+text-align: center;
+}
+.product-list {
+display: flex;
+flex-wrap: wrap;
+}
+
+.product {
+width: 300px;
+margin: 10px;
+padding: 10px;
+border: 1px solid #ccc;
+}
+
+.image-slider {
+overflow: hidden;
+white-space: nowrap;
+width: 100%;
+}
+.image-slider img {
+display: inline-block;
+max-width: 100%;
+width: 100%;
+vertical-align: middle;
+height: 200px;
+}
+.search-container {
+display: flex;
+align-items: center;
+}
+
+.search-area {
+margin-left: auto;
+padding:10px 20px;
+margin: 10px;
+}
+/* NoDataPage.css */
+.no-data-container {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+}
+  
+.no-data-text {
+font-size: 24px;
+font-weight: bold;
+text-align: center;
+text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow to the font */
+}
+  
+  
+  
