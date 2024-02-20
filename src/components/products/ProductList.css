@@ -52,15 +52,15 @@ height: 200px;
 }
 .search-container {
 display: flex;
-align-items: center;
+align-items: left;
 }
 
 .search-area {
 margin-left: auto;
 padding:10px 20px;
 margin: 10px;
+height: 20px;
 }
-/* NoDataPage.css */
 .no-data-container {
 display: flex;
 justify-content: center;
@@ -72,6 +72,9 @@ height: 100vh;
 font-size: 24px;
 font-weight: bold;
 text-align: center;
+top:5%;
+left: 55%;
+position: relative;
 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow to the font */
 }
   
