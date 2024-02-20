@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './style/ProductList.css';
+import { Link } from 'react-router-dom';
+
 function ProductList() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
@@ -56,15 +58,20 @@ function ProductList() {
 
   return (
     <div className="product-list">
-    <div className='search-container'>
-    <input
-        type="text"
-        className="search-area"
-        placeholder="Search"
-        value={search}
-        onChange={handleSearchChange}
-      />
-    {search !== '' && <p className='search-label'>You are searching for {search}</p>}    
+    <div className="list-container">
+      <div className='search-container'>
+        <input
+          type="text"
+          className="search-area"
+          placeholder="Search"
+          value={search}
+          onChange={handleSearchChange}
+        />
+        {search !== '' && <p className='search-label'>You are searching for {search}</p>}    
+      </div>
+      <div className="add-product-container">
+        <Link to="/add-product" className="add-product-button">Add Product</Link>
+      </div>
     </div>
 
     {

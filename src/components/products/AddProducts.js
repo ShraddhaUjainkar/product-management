@@ -30,7 +30,6 @@ const AddProducts = (products, setProducts) => {
             showConfirmButton: true
         });
     }
-   
     fetch('https://dummyjson.com/products/add', {
         method: 'POST',
         headers: {

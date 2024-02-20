@@ -77,6 +77,30 @@ left: 55%;
 position: relative;
 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow to the font */
 }
+.list-container {
+    display: flex;
+    justify-content: space-between; /* Adjust as needed */
+    align-items: center; /* Align items vertically */
+}
+.add-product-button {
+    /* Styles for the button */
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff; /* Example background color */
+    color: #fff; /* Example text color */
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .add-product-button:hover {
+    background-color: #3184dc; /* Example hover background color */
+  }
+  .add-product-container {
+    margin-left: 0;
+    margin-right: 10px; /* Adjust as needed */
+  }
+  
   
   
   
