@@ -3,7 +3,7 @@ import './style/style.css';
 import Swal from 'sweetalert2';
 
 
-const AddProducts = (products, setProducts) => {
+const AddProducts = () => {
     const [title, setTitle] = useState('');
     const [imageArray, setImageArray] = useState([]);
     const [price, setPrice] = useState('');
@@ -19,62 +19,53 @@ const AddProducts = (products, setProducts) => {
       const files = e.target.files;
       setImageArray(Array.from(files));
     };
-  
+ 
     const handleSubmit = (e) => {
-      e.preventDefault();
-      if (!price || !discount || !rating || !stock || !brand || !category) {
-        return Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'All fields are required.',
-            showConfirmButton: true
+        e.preventDefault();
+        if (!price || !discount || !rating || !stock || !brand || !category || !title || !description || !thumbnail || !imageArray ) {
+            return Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'All fields are required.',
+                showConfirmButton: true
+            });
+        }        
+        fetch('https://dummyjson.com/products/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                price: price,
+                discountPercentage: discount,
+                rating: rating,
+                stock: stock,
+                brand: brand,
+                category: category,
+                thumbnail:thumbnail,
+                images: Array.from(imageArray).map(image => image.name) 
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            Swal.fire({
+                icon: 'success',
+                title: 'Added!',
+                text: `${brand}'s data has been Added.`,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                showConfirmButton: true
+            });
         });
-    }
-    fetch('https://dummyjson.com/products/add', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        // body: JSON.stringify({
-           
-        // })
-        
-    })
-    .then(res => res.json())
-    .then(data => {
-        //setProducts([...products, data]);
-        const newProduct = { 
-            title: title,
-            description: description,
-            price: price,
-            discountPercentage: discount,
-            rating: rating,
-            stock: stock,
-            brand: brand,
-            category: category,
-            thumbnail:thumbnail,
-            images: Array.from(imageArray).map(image => image.name) 
-         };
-         console.log(newProduct)
-        Swal.fire({
-            icon: 'success',
-            title: 'Added!',
-            text: `${title}'s data has been Added.`,
-            showConfirmButton: false,
-            timer: 1500
-        });
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-            showConfirmButton: true
-        });
-    });
-    
     };
    
   
@@ -93,8 +84,7 @@ const AddProducts = (products, setProducts) => {
             </div>
             <div>
                 <label htmlFor="description">Description</label>
-                <textarea
-                    width="300px"
+                <input
                     id="description"
                     type="text"
                     value={description}
