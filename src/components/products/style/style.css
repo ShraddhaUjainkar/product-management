@@ -42,4 +42,21 @@
   .add-product button:hover {
     background-color: #45a049;
   }
+  .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; 
+}
+
+.form-row label {
+    margin-right: 10px;
+    width: 300px;
+}
+.submit-btn {
+  display: block;
+  margin: 0 auto;
+}
+
+
+
   

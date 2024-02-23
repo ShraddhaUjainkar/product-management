@@ -19,6 +19,19 @@ const AddProducts = () => {
       const files = e.target.files;
       setImageArray(Array.from(files));
     };
+
+    const resetForm = () =>{
+        setTitle(''); 
+        setImageArray(''); 
+        setPrice('');
+        setDiscount('');
+        setRating('');
+        setStock('');
+        setBrand('');
+        setCategory('');
+        setDescription('');
+        setThumbnail('');
+    }
  
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -49,6 +62,7 @@ const AddProducts = () => {
         .then(res => res.json())
         .then(data => {
             console.log(data);
+            resetForm();
             Swal.fire({
                 icon: 'success',
                 title: 'Added!',
@@ -73,7 +87,7 @@ const AddProducts = () => {
     <div className='add-product'>
         <div><h2>Add Product</h2></div>
         <form onSubmit={handleSubmit}>
-            <div>
+        <div className="form-row">
             <label htmlFor="title">Product Title </label>
             <input
                 id="title"
@@ -82,7 +96,7 @@ const AddProducts = () => {
                 onChange={(e) => setTitle(e.target.value)}
             />
             </div>
-            <div>
+            <div className="form-row">
                 <label htmlFor="description">Description</label>
                 <input
                     id="description"
@@ -91,7 +105,7 @@ const AddProducts = () => {
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="form-row">
                 <label htmlFor="thumbnail">Thumbnail</label>
                 <input
                     id="thumbnail"
@@ -100,7 +114,7 @@ const AddProducts = () => {
                     onChange={(e)=> setThumbnail(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="form-row">
             <label htmlFor="imageArray">Product Images </label>
             <input
                 id="imageArray"
@@ -109,44 +123,44 @@ const AddProducts = () => {
                 onChange={handleImageArrayChange}
             />
             </div>
-            <div>
+            <div className="form-row">
             <label htmlFor="price">Product Price</label>
             <input
                 id="price"
-                type="text"
+                type="number"
                 name="price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
             />
             </div>
-            <div>
+            <div className="form-row">
             <label htmlFor="discount">Product Discount</label>
             <input
                 id="discount"
-                type="text"
+                type="number"
                 value={discount}
                 onChange={(e) => setDiscount(e.target.value)}
             />
             </div>
-            <div>
+            <div className="form-row">
             <label htmlFor="rating">Product Rating</label>
             <input
                 id="rating"
-                type="text"
+                type="number"
                 value={rating}
                 onChange={(e) => setRating(e.target.value)}
             />
             </div>
-            <div>
+            <div className="form-row">
                 <label htmlFor="stock">Product Stock</label>
                 <input
                     id="stock"
-                    type="text"
+                    type="number"
                     value={stock}
                     onChange={(e) => setStock(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="form-row">
             <label htmlFor="brand">Product Brand</label>
             <input
                 id="brand"
@@ -155,7 +169,7 @@ const AddProducts = () => {
                 onChange={(e) => setBrand(e.target.value)}
             />
             </div>
-            <div>
+            <div className="form-row">
             <label htmlFor="category">Product Category</label>
             <input
                 id="category"
@@ -164,7 +178,7 @@ const AddProducts = () => {
                 onChange={(e) => setCategory(e.target.value)}
             />
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit" className='submit-btn'>Submit</button>
         </form>
     </div>
      
