@@ -57,6 +57,15 @@
   margin: 0 auto;
 }
 
-
+.add-product-button:hover {
+  background-color: #52606e;
+  color: aliceblue;
+  transition: 0.2s;
+}
+.add-product-container {
+  margin-left: 0;
+  margin: 10px 50px; 
+  float: right;
+}
 
   

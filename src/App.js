@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Navbar from './components/navbar/Navbar';
 import AddProducts from './components/products/AddProducts';
 import Login from './components/auth/Login';
+import EditProduct from './components/products/EditProduct';
 function App() {
   return (
      <BrowserRouter>
@@ -15,6 +16,7 @@ function App() {
         <Route path="/products" element={<Products />}/>
         <Route path='/add-product' element={<AddProducts />} />
         <Route path='/login' element={<Login />} /> 
+        <Route path='/edit/:productId' element={<EditProduct/>} />
       </Routes>
      </BrowserRouter>
   );

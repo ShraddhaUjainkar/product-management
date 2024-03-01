@@ -1,4 +1,4 @@
-.form-container, h1{
+.form-container{
     text-align: center;
     width: 400px;
 }
@@ -72,6 +72,10 @@ input {
     background: #657d9b;
     color:black;
     font-weight: bold;
+  }
+  .creds{
+    font-size: 10px;
+    color: rgb(196, 193, 193);
   }
 
  

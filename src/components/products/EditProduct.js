@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style/style.css';
+import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 
-const AddProducts = () => {
+const EditProduct = () => {
+    const { productId } = useParams();
     const [title, setTitle] = useState('');
     const [imageArray, setImageArray] = useState([]);
     const [price, setPrice] = useState('');
@@ -14,50 +16,42 @@ const AddProducts = () => {
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [thumbnail, setThumbnail] = useState('');
-    const productData = {
-        title: title,
-        imageArray: imageArray,
-        price: price,
-        discount: discount,
-        rating: rating,
-        stock: stock,
-        brand: brand,
-        category: category,
-        description: description,
-        thumbnail: thumbnail
-      };
-      
-  
-    const handleImageArrayChange = (e) => {
-      const files = e.target.files;
-      setImageArray(Array.from(files));
-    };
+    const [product, setProduct] = useState({
+        id: '',
+        title: '',
+        description: '',
+        price: 0,
+        discountPercentage: 0,
+        brand: '',
+        category: '',
+        rating: 0,
+        stock: 0,
+        thumbnail: '' ,
+        images: [],
+      }
+    );
 
-    const resetForm = () =>{
-        setTitle(''); 
-        setImageArray(''); 
-        setPrice('');
-        setDiscount('');
-        setRating('');
-        setStock('');
-        setBrand('');
-        setCategory('');
-        setDescription('');
-        setThumbnail('');
-    }
- 
+    useEffect(() => {
+        const fetchData = async () => {
+          try {       
+            let url = `https://dummyjson.com/products/${productId}`;        
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log(data);
+            setProduct(data);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+    
+        fetchData();
+      }, [productId]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!price || !discount || !rating || !stock || !brand || !category || !title || !description || !thumbnail || !imageArray ) {
-            return Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'All fields are required.',
-                showConfirmButton: true
-            });
-        }        
-        fetch('https://dummyjson.com/products/add', {
-            method: 'POST',
+        
+        fetch(`https://dummyjson.com/products/${productId}`, {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 title: title,
@@ -75,11 +69,10 @@ const AddProducts = () => {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            resetForm();
             Swal.fire({
                 icon: 'success',
                 title: 'Added!',
-                text: `${brand}'s data has been Added.`,
+                text: `${title}'s data has been Updated.`,
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -93,19 +86,21 @@ const AddProducts = () => {
                 showConfirmButton: true
             });
         });
+    }
+    const handleImageArrayChange = (e) => {
+        const files = e.target.files;
+        setImageArray(Array.from(files));
     };
-   
-  
-    return (
+
+  return (
     <div className='add-product'>
-        <div><h2>Add Product</h2></div>
-        <form onSubmit={handleSubmit}>
-        <div className="form-row">
+         <form onSubmit={handleSubmit}>
+            <div className="form-row">
             <label htmlFor="title">Product Title </label>
             <input
                 id="title"
                 type="text"
-                value={title}
+                value={ title || product.title}
                 onChange={(e) => setTitle(e.target.value)}
             />
             </div>
@@ -114,7 +109,7 @@ const AddProducts = () => {
                 <input
                     id="description"
                     type="text"
-                    value={description}
+                    value={description || product.description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </div>
@@ -126,6 +121,8 @@ const AddProducts = () => {
                     value={thumbnail}
                     onChange={(e)=> setThumbnail(e.target.value)}
                 />
+                {/* <img src={product.thumbnail} alt="Product Thumbnail" /> */}
+
             </div>
             <div className="form-row">
             <label htmlFor="imageArray">Product Images </label>
@@ -135,6 +132,9 @@ const AddProducts = () => {
                 multiple
                 onChange={handleImageArrayChange}
             />
+             {/* {product.images.map((image, index) => (
+                        <img key={index} src={image} alt={`Product Image ${index + 1}`} />
+                    ))} */}
             </div>
             <div className="form-row">
             <label htmlFor="price">Product Price</label>
@@ -142,7 +142,7 @@ const AddProducts = () => {
                 id="price"
                 type="number"
                 name="price"
-                value={price}
+                value={price || product.price}
                 onChange={(e) => setPrice(e.target.value)}
             />
             </div>
@@ -151,7 +151,7 @@ const AddProducts = () => {
             <input
                 id="discount"
                 type="number"
-                value={discount}
+                value={discount || product.discountPercentage}
                 onChange={(e) => setDiscount(e.target.value)}
             />
             </div>
@@ -160,7 +160,7 @@ const AddProducts = () => {
             <input
                 id="rating"
                 type="number"
-                value={rating}
+                value={product.rating}
                 onChange={(e) => setRating(e.target.value)}
             />
             </div>
@@ -169,7 +169,7 @@ const AddProducts = () => {
                 <input
                     id="stock"
                     type="number"
-                    value={stock}
+                    value={stock || product.stock}
                     onChange={(e) => setStock(e.target.value)}
                 />
             </div>
@@ -178,7 +178,7 @@ const AddProducts = () => {
             <input
                 id="brand"
                 type="text"
-                value={brand}
+                value={brand || product.brand}
                 onChange={(e) => setBrand(e.target.value)}
             />
             </div>
@@ -187,15 +187,14 @@ const AddProducts = () => {
             <input
                 id="category"
                 type="text"
-                value={category}
+                value={category || product.category}
                 onChange={(e) => setCategory(e.target.value)}
             />
             </div>
             <button type="submit" className='submit-btn'>Submit</button>
         </form>
     </div>
-     
-    );
+  )
 }
 
-export default AddProducts
+export default EditProduct
