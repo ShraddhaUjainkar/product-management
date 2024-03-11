@@ -5,13 +5,14 @@ const Card = ({products}) => {
   return (
     <div className="product-list">
     {
-      products.length === 0 ?
-      (<div className="no-data-container">
-        <p className="no-data-text">No products available</p>
-       </div>)
-      :
-    (<div className="card-container">
-      {products.map(product => (
+      // products.length === 0 ?
+      // (<div className="no-data-container">
+      //   <p className="no-data-text">No products available</p>
+      //  </div>)
+      // :
+    //(
+    <div className="card-container">
+      {products && products.map(product => (
         <div key={product.id} className="card">
           <div className="image-slider">
           <Slider images={product.images} />
@@ -28,7 +29,8 @@ const Card = ({products}) => {
           </div>
         </div>
       ))}
-    </div>)
+    </div>
+    //)
      }
   </div>
   )

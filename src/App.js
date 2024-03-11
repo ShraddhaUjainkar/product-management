@@ -7,7 +7,9 @@ import Navbar from './components/navbar/Navbar';
 import AddProducts from './components/products/AddProducts';
 import Login from './components/auth/Login';
 import EditProduct from './components/products/EditProduct';
+import { Suspense,lazy } from 'react';
 function App() {
+console.log('ok')
   return (
      <BrowserRouter>
       <Navbar />
