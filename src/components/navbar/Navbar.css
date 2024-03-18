@@ -45,4 +45,6 @@ header {
   .navbar a{
     text-decoration: none;
   }
-  
+  li .active{
+    color:grey;
+   }

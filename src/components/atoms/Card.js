@@ -1,7 +1,7 @@
 import React from 'react'
 import Slider from '../atoms/Slider';
 
-const Card = ({products}) => {
+const Card = ({products, searchText}) => {
   return (
     <div className="product-list">
     {
